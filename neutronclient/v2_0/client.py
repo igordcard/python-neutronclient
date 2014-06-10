@@ -230,6 +230,10 @@ class Client(object):
     firewall_path = "/fw/firewalls/%s"
     net_partitions_path = "/net-partitions"
     net_partition_path = "/net-partitions/%s"
+    steering_classifiers_path = '/ts/steering_classifiers'
+    steering_classifier_path = '/ts/steering_classifiers/%s'
+    port_chains_path = '/ts/port_chains'
+    port_chain_path = '/ts/port_chains/%s'
 
     # API has no way to report plurals, so we have to hard code them
     EXTED_PLURALS = {'routers': 'router',
@@ -255,6 +259,8 @@ class Client(object):
                      'metering_label_rules': 'metering_label_rule',
                      'net_partitions': 'net_partition',
                      'packet_filters': 'packet_filter',
+                     'steering_classifiers': 'steering_classifier',
+                     'port_chains': 'port_chain',
                      }
     # 8192 Is the default max URI len for eventlet.wsgi.server
     MAX_URI_LEN = 8192
@@ -1194,6 +1200,66 @@ class Client(object):
     def delete_packet_filter(self, packet_filter_id):
         """Delete the specified packet filter."""
         return self.delete(self.packet_filter_path % packet_filter_id)
+
+    @APIParamsCall
+    def create_steering_classifier(self, body=None):
+        """Create a new steering classifier."""
+        return self.post(self.steering_classifiers_path, body=body)
+
+    @APIParamsCall
+    def update_steering_classifier(self, steering_classifier_id, body=None):
+        """Update a steering classifier."""
+        return self.put(self.steering_classifier_path %
+                        steering_classifier_id, body=body)
+
+    @APIParamsCall
+    def list_steering_classifiers(self, retrieve_all=True, **_params):
+        """Fetch a list of all steering classifiers for a tenant."""
+        return self.list('steering_classifiers',
+                         self.steering_classifiers_path, retrieve_all,
+                         **_params)
+
+    @APIParamsCall
+    def show_steering_classifier(self, steering_classifier_id, **_params):
+        """Fetch information of a certain steering classifier."""
+        return self.get(self.steering_classifier_path % steering_classifier_id,
+                        params=_params)
+
+    @APIParamsCall
+    def delete_steering_classifier(self, steering_classifier_id):
+        """Delete the specified steering classifier."""
+        return self.delete(self.steering_classifier_path %
+                           steering_classifier_id)
+
+    @APIParamsCall
+    def create_port_chain(self, body=None):
+        """Create a new port chain."""
+        return self.post(self.port_chains_path, body=body)
+
+    @APIParamsCall
+    def update_port_chain(self, port_chain_id, body=None):
+        """Update a port chain."""
+        return self.put(self.port_chain_path %
+                        port_chain_id, body=body)
+
+    @APIParamsCall
+    def list_port_chains(self, retrieve_all=True, **_params):
+        """Fetch a list of all port chains for a tenant."""
+        return self.list('port_chains',
+                         self.port_chains_path, retrieve_all,
+                         **_params)
+
+    @APIParamsCall
+    def show_port_chain(self, port_chain_id, **_params):
+        """Fetch information of a certain port chain."""
+        return self.get(self.port_chain_path % port_chain_id,
+                        params=_params)
+
+    @APIParamsCall
+    def delete_port_chain(self, port_chain_id):
+        """Delete the specified port chain."""
+        return self.delete(self.port_chain_path %
+                           port_chain_id)
 
     def __init__(self, **kwargs):
         """Initialize a new client for the Neutron v2.0 API."""

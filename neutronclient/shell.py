@@ -67,6 +67,8 @@ from neutronclient.neutron.v2_0 import router
 from neutronclient.neutron.v2_0 import securitygroup
 from neutronclient.neutron.v2_0 import servicetype
 from neutronclient.neutron.v2_0 import subnet
+from neutronclient.neutron.v2_0.ts import steering_classifier as ts_classifier
+from neutronclient.neutron.v2_0.ts import port_chain
 from neutronclient.neutron.v2_0.vpn import ikepolicy
 from neutronclient.neutron.v2_0.vpn import ipsec_site_connection
 from neutronclient.neutron.v2_0.vpn import ipsecpolicy
@@ -296,6 +298,16 @@ COMMAND_V2 = {
     'nec-packet-filter-create': packetfilter.CreatePacketFilter,
     'nec-packet-filter-update': packetfilter.UpdatePacketFilter,
     'nec-packet-filter-delete': packetfilter.DeletePacketFilter,
+    'steering-classifier-create': ts_classifier.CreateSteeringClassifier,
+    'steering-classifier-show': ts_classifier.ShowSteeringClassifier,
+    'steering-classifier-list': ts_classifier.ListSteeringClassifier,
+    'steering-classifier-update': ts_classifier.UpdateSteeringClassifier,
+    'steering-classifier-delete': ts_classifier.DeleteSteeringClassifier,
+    'port-chain-create': port_chain.CreatePortChain,
+    'port-chain-show': port_chain.ShowPortChain,
+    'port-chain-list': port_chain.ListPortChain,
+    'port-chain-update': port_chain.UpdatePortChain,
+    'port-chain-delete': port_chain.DeletePortChain,
 }
 
 COMMANDS = {'2.0': COMMAND_V2}
