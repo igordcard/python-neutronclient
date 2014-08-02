@@ -222,6 +222,11 @@ class Client(object):
     net_partitions_path = "/net-partitions"
     net_partition_path = "/net-partitions/%s"
 
+    attachment_points_path = "/attachment_points"
+    attachment_point_path = "/attachment_points/%s"
+    external_ports_path = "/external_ports"
+    external_port_path = "/external_ports/%s"
+
     # API has no way to report plurals, so we have to hard code them
     EXTED_PLURALS = {'routers': 'router',
                      'floatingips': 'floatingip',
@@ -246,6 +251,8 @@ class Client(object):
                      'metering_label_rules': 'metering_label_rule',
                      'net_partitions': 'net_partition',
                      'packet_filters': 'packet_filter',
+                     'attachment_points': 'attachment_point',
+                     'external_ports': 'external_port',
                      }
     # 8192 Is the default max URI len for eventlet.wsgi.server
     MAX_URI_LEN = 8192
@@ -1186,6 +1193,72 @@ class Client(object):
     def delete_packet_filter(self, packet_filter_id):
         """Delete the specified packet filter."""
         return self.delete(self.packet_filter_path % packet_filter_id)
+
+    @APIParamsCall
+    def create_attachment_point(self, body=None):
+        """Request the creation of an attachment point on a given tenant."""
+        return self.post(self.attachment_points_path, body=body)
+
+    @APIParamsCall
+    def show_attachment_point(self, attachment_point_id, **_params):
+        """Show information of a given attachment point."""
+        return self.get(self.attachment_point_path % attachment_point_id,
+                        params=_params)
+
+    @APIParamsCall
+    def list_attachment_points(self, retrieve_all=True, **_params):
+        """List attachment points that belong to a given tenant."""
+        return self.list('attachment_points', self.attachment_points_path,
+                         retrieve_all, **_params)
+
+    @APIParamsCall
+    def update_attachment_point(self, attachment_point_id, body=None):
+        """Update a given attachment point."""
+        return self.put(self.attachment_point_path % attachment_point_id, body=body)
+
+    @APIParamsCall
+    def delete_attachment_point(self, attachment_point_id):
+        """Delete a given attachment point."""
+        return self.delete(self.attachment_point_path % attachment_point_id)
+
+    @APIParamsCall
+    def create_external_port(self, body=None):
+        """Request the creation of an external port on a given attachment point."""
+        return self.post(self.external_ports_path, body=body)
+
+    @APIParamsCall
+    def show_external_port(self, external_port_id, **_params):
+        """Show information of a given external port."""
+        return self.get(self.external_port_path % external_port_id,
+                        params=_params)
+
+    @APIParamsCall
+    def list_external_ports(self, retrieve_all=True, **_params):
+        """List external ports that belong to a given attachment point."""
+        return self.list('external_ports', self.external_ports_path,
+                         retrieve_all, **_params)
+
+    @APIParamsCall
+    def update_external_port(self, external_port_id, body=None):
+        """Update a given external port."""
+        return self.put(self.external_port_path % external_port_id, body=body)
+
+    @APIParamsCall
+    def delete_external_port(self, external_port_id):
+        """Delete a given external port."""
+        return self.delete(self.external_port_path % external_port_id)
+
+    @APIParamsCall
+    def attach_external_port(self, external_port_id, **_params):
+        """Attach an external port to a given network."""
+        return self.put(self.external_port_path % external_port_id,
+                        params=_params)
+
+    @APIParamsCall
+    def detach_external_port(self, external_port_id, **_params):
+        """Detach an external port from a network."""
+        return self.put(self.external_port_path % external_port_id,
+                        params=_params)
 
     def __init__(self, **kwargs):
         """Initialize a new client for the Neutron v2.0 API."""

@@ -35,6 +35,7 @@ from neutronclient.neutron.v2_0 import agent
 from neutronclient.neutron.v2_0 import agentscheduler
 from neutronclient.neutron.v2_0 import credential
 from neutronclient.neutron.v2_0 import extension
+from neutronclient.neutron.v2_0 import external_port
 from neutronclient.neutron.v2_0 import floatingip
 from neutronclient.neutron.v2_0.fw import firewall
 from neutronclient.neutron.v2_0.fw import firewallpolicy
@@ -277,6 +278,21 @@ COMMAND_V2 = {
     'nec-packet-filter-create': packetfilter.CreatePacketFilter,
     'nec-packet-filter-update': packetfilter.UpdatePacketFilter,
     'nec-packet-filter-delete': packetfilter.DeletePacketFilter,
+
+    'attachment-point-list': external_port.ListAttachmentPoint,
+    'attachment-point-show': external_port.ShowAttachmentPoint,
+    'attachment-point-create': external_port.CreateAttachmentPoint,
+    'attachment-point-delete': external_port.DeleteAttachmentPoint,
+    'attachment-point-update': external_port.UpdateAttachmentPoint,
+    'attachment-point-attach': external_port.AttachAttachmentPoint,
+    'attachment-point-detach': external_port.DetachAttachmentPoint,
+    'external-port-list': external_port.ListExternalPort,
+    'external-port-show': external_port.ShowExternalPort,
+    'external-port-create': external_port.CreateExternalPort,
+    'external-port-delete': external_port.DeleteExternalPort,
+    'external-port-update': external_port.UpdateExternalPort,
+    'external-port-attach': external_port.AttachExternalPort,
+    'external-port-detach': external_port.DetachExternalPort,
 }
 
 COMMANDS = {'2.0': COMMAND_V2}
